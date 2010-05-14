@@ -1,0 +1,24 @@
+#!/bin/bash
+XENSTOREREAD="/usr/bin/xenstore-read"
+
+[ -x $XENSTOREREAD ] || exit 0
+
+IP=`$XENSTOREREAD vm-data/ip`
+GW=`$XENSTOREREAD vm-data/gw`
+NM=`$XENSTOREREAD vm-data/nm`
+
+for DATA in $IP $GW $NM; do
+	[ "$DATA" = "" ] && exit 0
+done
+
+cat << EOF > /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+	address $IP
+	netmask $NM
+	gateway $GW
+EOF
+exit 0

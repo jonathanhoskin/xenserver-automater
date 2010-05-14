@@ -1,0 +1,7 @@
+#!/bin/bash
+XENSTOREREAD="/usr/bin/xenstore-read"
+if [ -e $XENSTOREREAD ]; then
+	echo `$XENSTOREREAD name` > /etc/hostname
+	/bin/hostname -F /etc/hostname
+fi
+exit 0
