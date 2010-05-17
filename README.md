@@ -5,21 +5,13 @@
 	xe vm-param-set uuid=$UUID xenstore-data:vm-data/nm=255.255.255.0
 
 
-## Install files on guest VM:
+## Install scripts on guest VM:
 
-Copy xe-set-* into /usr/sbin/ and chmod +x
+Copy usr/sbin/xe-set-* into /usr/sbin/ and chmod +x
 
 
-## Modify networking script
-Edit /etc/init.d/networking:
+## Install Upstart script on guest VM:
 
-* BEFORE:
-			start)
-        		/lib/init/upstart-job networking start
-        		;;
-* AFTER:
-				start)
-        		/usr/sbin/xe-set-network
-        		/usr/sbin/xe-set-hostname
-        		/lib/init/upstart-job networking start
-        		;;
+Copy etc/init/xe-automate.conf into /etc/init/
+
+## Reboot

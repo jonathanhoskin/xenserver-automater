@@ -8,7 +8,7 @@ GW=`$XENSTOREREAD vm-data/gw`
 NM=`$XENSTOREREAD vm-data/nm`
 
 for DATA in $IP $GW $NM; do
-	[ "$DATA" = "" ] && exit 0
+        [ "$DATA" = "" ] && exit 0
 done
 
 cat << EOF > /etc/network/interfaces
@@ -17,8 +17,11 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet static
-	address $IP
-	netmask $NM
-	gateway $GW
+        address $IP
+        netmask $NM
+        gateway $GW
 EOF
+
+/etc/init.d/networking restart
+
 exit 0
